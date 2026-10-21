@@ -4,36 +4,21 @@ namespace RpgManagerLibrary
     public abstract class Character
     {
         private const int MinimumHealth = -100;
-        public string Name { get; set; }
-        public decimal Health { get; private set; }
-        public DateTime CreationDate { get; set; }
-        public int PowerLevel { get; set; }
-
-        public Player Player { get; set; }
-
+        public required string Name { get; set; }
+        public required int PowerLevel { get; set; }
+        public required Player Player { get; set; }
+        public decimal Health { get; private set; } = 100;
+        public DateTime CreationDate { get; set; } = DateTime.Now;
         public abstract string CharacterType { get; }
 
-        /// <summary>
-        /// Instantiates a new Character with empty name, health of 100 and current date as creation date.
-        /// </summary>
-        public Character(Player player) : this(string.Empty, 100, player)
+        protected Character()
         {
+            
         }
 
-        /// <summary>
-        /// Instantiates a new Character with given name, health, creation date and power level.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="health"></param>
-        /// <param name="creationDate"></param>
-        /// <param name="powerLevel"></param>
-        public Character(string name, decimal health, Player player, int powerLevel = 0, DateTime? creationDate = null)
+        protected Character(int health)
         {
-            Name = name;
             Health = health;
-            CreationDate = creationDate ?? DateTime.Now;
-            PowerLevel = powerLevel;
-            Player = player;
         }
 
         /// <summary>
@@ -69,10 +54,10 @@ namespace RpgManagerLibrary
 
         public override string ToString()
         {
-            // :N2 maakt dat healt wordt geformatteerd als nummer en max 2 cijfers na de komma laat zien
+            // :N2 maakt dat Healt wordt geformatteerd als nummer en max 2 cijfers na de komma laat zien
             // cf.: https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#numeric-format-specifier-n
             return $"{Name} – {CharacterType} {Environment.NewLine}" +
-                $"Health: {Health:N2} / PowerLevel: {PowerLevel} / Created: {CreationDate.ToShortDateString()}";
+                $"Health: {Health:N2} / PowerLevel: {PowerLevel} / Created: {CreationDate:d}";
         }
     }
 }

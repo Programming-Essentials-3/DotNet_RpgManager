@@ -8,14 +8,8 @@ namespace RpgManagerLibrary
 {
     public class Player
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
-        public Player(string firstName, string lastName)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-        }
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
 
         public override string ToString()
         {

@@ -4,21 +4,21 @@ namespace RpgManagerConsole
 {
     internal class Program
     {
-        private static Player CurrentPlayer = new("Wim", "Hambrouck");
-        private static Character CurrentCharacter = new Mage("Wim", 100, DateTime.Now, 9999, 10, CurrentPlayer);
+        private static Player CurrentPlayer = new() { FirstName = "Wim", LastName = "Hambrouck" };
+        private static Character CurrentCharacter = new Mage() { Name = "William", PowerLevel = 9999, ManaBoost = 10, Player = CurrentPlayer };
 
         private static readonly List<Character> Characters = [CurrentCharacter];
         private static readonly List<Player> Players = [CurrentPlayer];
 
         static void Main(string[] args)
         {
-            Warrior warrior = new("ZARKAN, the DESTROYER!", 150, DateTime.Now, 100, CurrentPlayer);
-            warrior.Weapons.Add("Sword of a Thousand Truths");
+            Warrior warrior = new(health: 150) { Name = "Zarkan the DESTROYER!", PowerLevel = 100, Player = CurrentPlayer };
             warrior.Weapons.Add("Sting");
+            warrior.Weapons.Add("Sword of a Thousand Truths");
             warrior.Weapons.Add("Aperture Science Handheld Portal Device");
             Characters.Add(warrior);
 
-            Player player2 = new("Anna", "Smith");
+            Player player2 = new() { FirstName = "Anna", LastName = "Smith" };
             Players.Add(player2);
 
             bool continueApp = true;

@@ -3,14 +3,14 @@
     /// <summary>
     /// Provides utility methods for reading and validating user input from the console.
     /// </summary>
-    internal class ConsoleInput
+    internal static class ConsoleInput
     {
         /// <summary>
         /// Print a menu with options and an exit option. Returns the chosen option as an integer.
         /// </summary>
         /// <param name="options">Options to display in the menu. Options are automatically numbered, starting with 1.</param>
         /// <param name="exitOption">Name for the exit option (always displayed on the bottom as option #0)</param>
-        /// <returns>The chosen option.</returns>
+        /// <returns>The index of the chosen option.</returns>
         public static int Menu(IList<string> options, string exitOption)
         {
             for (int i = 0; i < options.Count; i++)
@@ -71,6 +71,16 @@
         }
 
         /// <summary>
+        /// Reads a single character from the console after displaying the specified prompt.
+        /// </summary>
+        /// <param name="prompt">The message to display to the user before reading input.</param>
+        /// <returns>The first character of the key entered by the user.</returns>
+        public static char ReadChar(string prompt)
+        {
+            return ReadFromConsole(prompt, readKey: true)[0];
+        }
+
+        /// <summary>
         /// Reads input (string or char) from the console after displaying a prompt.
         /// </summary>
         /// <param name="prompt">The message to display to the user before reading input.</param>
@@ -98,16 +108,6 @@
 
             Console.ForegroundColor = currentColor;
             return output;
-        }
-
-        /// <summary>
-        /// Reads a single character from the console after displaying the specified prompt.
-        /// </summary>
-        /// <param name="prompt">The message to display to the user before reading input.</param>
-        /// <returns>The first character of the key entered by the user.</returns>
-        public static char ReadChar(string prompt)
-        {
-            return ReadFromConsole(prompt, readKey: true)[0];
         }
 
         /// <summary>

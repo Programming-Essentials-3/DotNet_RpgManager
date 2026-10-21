@@ -6,13 +6,13 @@
 
         public override string CharacterType => "Warrior";
 
-        public Warrior(Player player) : base(player)
+        public Warrior(int health) : base(health)
         {
         }
 
-        public Warrior(string name, decimal health, DateTime creationDate, int powerLevel, Player player) : base(name, health, player, powerLevel, creationDate)
-        {
-        }
+        //public Warrior(string name, decimal health, DateTime creationDate, int powerLevel, Player player) : base(name, health, player, powerLevel, creationDate)
+        //{
+        //}
 
         override public string ToString()
         {
