@@ -37,7 +37,8 @@ namespace RpgManagerConsole
                       "New Player",
                       "Switch Player"
                     ],
-                    "Quit");
+                    exitOption: "Quit"
+                    );
 
                 switch (keuze)
                 {
@@ -92,10 +93,7 @@ namespace RpgManagerConsole
                     ConsoleInput.ShowError(e.Message);
                     char retry = ConsoleInput.ReadChar("Do you want to try again? (Y/N) [N]: ");
                     Console.WriteLine();
-                    if (retry != 'Y')
-                    {
-                        continueLoop = false;
-                    }
+                    continueLoop = retry == 'Y' || retry == 'y';
                 }
             }
         }
@@ -103,6 +101,7 @@ namespace RpgManagerConsole
         private static bool AddCharacterForPlayer(Player player)
         {
             ConsoleDraw.DrawBox("Create new character");
+            // keuzes zijn hier hardcoded, zou op basis van enum kunnen of met een beheerbare lijst in een databank
             switch (ConsoleInput.Menu(["Mage", "Warrior"], "Cancel"))
             {
                 case 1:
@@ -119,7 +118,7 @@ namespace RpgManagerConsole
         private static void NewWarrior(Player player)
         {
             string warriorName = ConsoleInput.ReadString("What should this fearsome warrior be called? ");
-            Warrior warrior = new(warriorName, 100, DateTime.Now, 9999, player);
+            Warrior warrior = new() { Name = warriorName, PowerLevel = 9999, Player = player };
 
             string weapon = ConsoleInput.ReadString("Add weapon (type weapon name or Q to quit): ");
             while (!weapon.Equals("Q", StringComparison.CurrentCultureIgnoreCase))
@@ -134,7 +133,7 @@ namespace RpgManagerConsole
         private static void NewMage(Player player)
         {
             string mageName = ConsoleInput.ReadString("What should this mystical mage be called? ");
-            CurrentCharacter = new Mage(mageName, 100, DateTime.Now, 9999, 10, player);
+            CurrentCharacter = new Mage() { Name = mageName, PowerLevel = 9999, ManaBoost = 10, Player = player };
             Characters.Add(CurrentCharacter);
         }
 
@@ -148,17 +147,17 @@ namespace RpgManagerConsole
 
             // Ter info: volgende code kan gemakkelijker met LINQ, maar dat is op dit punt in de cursus nog niet behandeld.
             // Met LINQ kan de rest van deze methode vervangen volgen met deze code:
-            //    var list = Characters.Where(c => c.Player == CurrentPlayer);
-            //    int keuze = ConsoleInput.Menu(list.Select(c => $"{c.Name} ({c.CharacterType})").ToList(), "Cancel");
-            //    if (keuze != 0)
-            //    {
-            //        CurrentCharacter = list.ElementAt(keuze - 1);
-            //    }
+            //      IEnumerable<Character> list = Characters.Where(c => c.Player == CurrentPlayer);
+            //      int keuze = ConsoleInput.Menu([.. list.Select(c => $"{c.Name} ({c.CharacterType})")], "Cancel");
+            //      if (keuze != 0)
+            //      {
+            //          CurrentCharacter = list.ElementAt(keuze - 1);
+            //      }
             Dictionary<Character, string> playerCharacters = [];
             foreach (Character character in Characters)
             {
                 // enkel personages van de huidige speler tonen
-                // Noot: we willen effectief de ref vergelijken, dat is sneller en
+                // Noot: we willen effectief de reference vergelijken, dat is sneller en
                 // speler mag immers meerdere personages hebben met dezelfde naam
                 if (character.Player == CurrentPlayer)
                 {
@@ -166,7 +165,7 @@ namespace RpgManagerConsole
                 }
             }
 
-            int keuze = ConsoleInput.Menu(playerCharacters.Values.ToList(), "Cancel");
+            int keuze = ConsoleInput.Menu([.. playerCharacters.Values], "Cancel");
 
             // OPGELET: De Menu-methode controleert op juiste invoer.
             //
@@ -181,10 +180,11 @@ namespace RpgManagerConsole
 
         private static void AddPlayer()
         {
-            Player newPlayer = new(
-                          ConsoleInput.ReadString("Enter first name: "),
-                          ConsoleInput.ReadString("Enter last name: ")
-                      );
+            Player newPlayer = new()
+            {
+                FirstName = ConsoleInput.ReadString("Enter first name: "),
+                LastName = ConsoleInput.ReadString("Enter last name: ")
+            };
 
             if (AddCharacterForPlayer(newPlayer))
             {

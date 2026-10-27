@@ -6,6 +6,11 @@
 
         public override string CharacterType => "Warrior";
 
+        public Warrior()
+        {
+            
+        }
+
         public Warrior(int health) : base(health)
         {
         }

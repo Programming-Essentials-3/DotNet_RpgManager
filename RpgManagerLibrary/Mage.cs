@@ -6,10 +6,16 @@
 
         public override string CharacterType => "Mage";
 
-        //public Mage(Player player) : base(player)
-        //{
+
+        public Mage()
+        {
             
-        //}
+        }
+
+        public Mage(int health) : base(health)
+        {
+            
+        }
 
         //public Mage(string name, decimal health, DateTime creationDate, int powerLevel, int manaBoost, Player player) : base(name, health, player, powerLevel, creationDate)
         //{
