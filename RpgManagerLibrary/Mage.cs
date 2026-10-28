@@ -17,11 +17,6 @@
             
         }
 
-        //public Mage(string name, decimal health, DateTime creationDate, int powerLevel, int manaBoost, Player player) : base(name, health, player, powerLevel, creationDate)
-        //{
-        //    ManaBoost = manaBoost;
-        //}
-
         override public string ToString()
         {
             return $"{base.ToString()} / ManaBoost: {ManaBoost}";

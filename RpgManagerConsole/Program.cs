@@ -4,18 +4,37 @@ namespace RpgManagerConsole
 {
     internal class Program
     {
-        private static Player CurrentPlayer = new() { FirstName = "Wim", LastName = "Hambrouck" };
-        private static Character CurrentCharacter = new Mage() { Name = "William", PowerLevel = 9999, ManaBoost = 10, Player = CurrentPlayer };
+        private static Player CurrentPlayer = new() { 
+            FirstName = "Wim", 
+            LastName = "Hambrouck" 
+        };
+        private static Character CurrentCharacter = new Mage() { 
+            Name = "William", 
+            PowerLevel = 9999, 
+            ManaBoost = 10, 
+            Player = CurrentPlayer 
+        };
 
+        // Lijst van personages aanmaken en huidige personage toevoegen
         private static readonly List<Character> Characters = [CurrentCharacter];
+        
+        // Lijst van spelers aanmaken en huidige speler toevoegen
         private static readonly List<Player> Players = [CurrentPlayer];
 
         static void Main(string[] args)
         {
-            Warrior warrior = new(health: 150) { Name = "Zarkan the DESTROYER!", PowerLevel = 100, Player = CurrentPlayer };
-            warrior.Weapons.Add("Sting");
-            warrior.Weapons.Add("Sword of a Thousand Truths");
-            warrior.Weapons.Add("Aperture Science Handheld Portal Device");
+            Warrior warrior = new(health: 150) 
+            { 
+                Name = "Zarkan the DESTROYER!", 
+                PowerLevel = 100, 
+                Player = CurrentPlayer,
+                Weapons =
+                [
+                    "Sting",
+                    "Sword of a Thousand Truths",
+                    "Aperture Science Handheld Portal Device"
+                ]
+            };
             Characters.Add(warrior);
 
             Player player2 = new() { FirstName = "Anna", LastName = "Smith" };
@@ -43,10 +62,10 @@ namespace RpgManagerConsole
                 switch (keuze)
                 {
                     case 1:
-                        HealCharacter();
+                        HealCurrentCharacter();
                         break;
                     case 2:
-                        DamageCharacter();
+                        DamageCurrentCharacter();
                         break;
                     case 3:
                         AddCharacterForPlayer(CurrentPlayer);
@@ -70,13 +89,13 @@ namespace RpgManagerConsole
             Console.WriteLine("Bye!");
         }
 
-        private static void HealCharacter()
+        private static void HealCurrentCharacter()
         {
             int healAmount = ConsoleInput.ReadInt("Enter amount to heal (1 - 1000, 0 to cancel) [0]: ", 1, 1000, 0);
             CurrentCharacter.Heal(healAmount);
         }
 
-        private static void DamageCharacter()
+        private static void DamageCurrentCharacter()
         {
             bool continueLoop = true;
 
@@ -105,20 +124,24 @@ namespace RpgManagerConsole
             switch (ConsoleInput.Menu(["Mage", "Warrior"], "Cancel"))
             {
                 case 1:
-                    NewMage(player);
+                    AddMage(player);
                     return true;
                 case 2:
-                    NewWarrior(player);
+                    AddWarrior(player);
                     return true;
                 default:
                     return false;
             }
         }
 
-        private static void NewWarrior(Player player)
+        private static void AddWarrior(Player player)
         {
             string warriorName = ConsoleInput.ReadString("What should this fearsome warrior be called? ");
-            Warrior warrior = new() { Name = warriorName, PowerLevel = 9999, Player = player };
+            Warrior warrior = new() { 
+                Name = warriorName, 
+                PowerLevel = 9999, 
+                Player = player 
+            };
 
             string weapon = ConsoleInput.ReadString("Add weapon (type weapon name or Q to quit): ");
             while (!weapon.Equals("Q", StringComparison.CurrentCultureIgnoreCase))
@@ -130,10 +153,15 @@ namespace RpgManagerConsole
             Characters.Add(CurrentCharacter);
         }
 
-        private static void NewMage(Player player)
+        private static void AddMage(Player player)
         {
             string mageName = ConsoleInput.ReadString("What should this mystical mage be called? ");
-            CurrentCharacter = new Mage() { Name = mageName, PowerLevel = 9999, ManaBoost = 10, Player = player };
+            CurrentCharacter = new Mage() { 
+                Name = mageName, 
+                PowerLevel = 9999, 
+                ManaBoost = 10, 
+                Player = player 
+            };
             Characters.Add(CurrentCharacter);
         }
 
@@ -195,7 +223,6 @@ namespace RpgManagerConsole
 
         private static void SwitchPlayer()
         {
-            // same as SwitchCharacter but for players
             Console.Clear();
             ConsoleDraw.WriteHeader(CurrentCharacter, CurrentPlayer);
             ConsoleDraw.DrawBox("Switch Player", fullWidth: true);

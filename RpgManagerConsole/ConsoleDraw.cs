@@ -8,8 +8,24 @@ namespace RpgManagerConsole
     /// </summary>
     static internal class ConsoleDraw
     {
-        private static readonly BoxCharacters SingleLine = new(Horizontal: '─', Vertical: '│', UpperLeft: '┌', UpperRight: '┐', LowerLeft: '└', LowerRight: '┘');
-        private static readonly BoxCharacters DoubleLine = new(Horizontal: '═', Vertical: '║', UpperLeft: '╔', UpperRight: '╗', LowerLeft: '╚', LowerRight: '╝');
+        private static readonly BoxCharacters SingleLine = new()
+        {
+            Horizontal = '─',
+            Vertical = '│',
+            UpperLeft = '┌',
+            UpperRight = '┐',
+            LowerLeft = '└',
+            LowerRight = '┘'
+        };
+        private static readonly BoxCharacters DoubleLine = new()
+        {
+            Horizontal = '═',
+            Vertical = '║',
+            UpperLeft = '╔',
+            UpperRight = '╗',
+            LowerLeft = '╚',
+            LowerRight = '╝'
+        };
 
         /// <summary>
         /// Tekent kadertje in de console met de opgegeven titel.

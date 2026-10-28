@@ -15,10 +15,6 @@
         {
         }
 
-        //public Warrior(string name, decimal health, DateTime creationDate, int powerLevel, Player player) : base(name, health, player, powerLevel, creationDate)
-        //{
-        //}
-
         override public string ToString()
         {
             return $"{base.ToString()}{Environment.NewLine}Weapons: {string.Join(", ", Weapons)}";
